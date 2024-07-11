@@ -11,15 +11,15 @@ async def confirm(request: Request):
     
 @app.post("/image/")
 async def read_image(request: Request):
-    
+    request = await request.json()
     with open("question.png", "wb") as image:
-        image.write(base64.b64decode(request.query_params['image'].replace('data:image/png;base64,','')))
+        image.write(base64.b64decode(request['image'].replace('data:image/png;base64,','')))
         
-    return gemini.text_in_image(request.query_params['key'], request.query_params['prompt'], "question.png", request.query_params['model_name'])
+    return gemini.text_in_image(request['key'], request['prompt'], "question.png", request['model_name'])
 
 @app.post("/text/")
 async def read_text(request: Request):
     
-    return gemini.text_only(request.query_params['key'], request.query_params['prompt'], request.query_params['model_name'])
+    return gemini.text_only(request['key'], request['prompt'], request['model_name'])
 
 

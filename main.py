@@ -19,7 +19,7 @@ async def read_image(request: Request):
 
 @app.post("/text/")
 async def read_text(request: Request):
-    
+    request = await request.json()
     return gemini.text_only(request['key'], request['prompt'], request['model_name'])
 
 
